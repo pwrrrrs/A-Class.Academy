@@ -126,6 +126,20 @@ create table if not exists public.quiz_attempts (
   created_at timestamptz not null default now()
 );
 
+-- Public "showcase" page: sample teaching clips, classroom photos, reviews
+create table if not exists public.showcase (
+  id uuid primary key default gen_random_uuid(),
+  kind text not null check (kind in ('video', 'photo', 'review')),
+  title text,            -- clip title / photo caption
+  body text,             -- review text or clip description
+  media_url text,        -- YouTube link (video) or image URL (photo, review screenshot)
+  author text,           -- who wrote the review
+  author_detail text,    -- e.g. "ผู้ปกครองน้อง ม.4"
+  is_published boolean not null default true,
+  sort_order int not null default 100,
+  created_at timestamptz not null default now()
+);
+
 create index if not exists lessons_course_idx on public.lessons(course_id, sort_order);
 create index if not exists quiz_lesson_idx on public.quiz_questions(lesson_id, sort_order);
 create index if not exists payments_user_idx on public.payments(user_id, course_id);
@@ -334,6 +348,7 @@ alter table public.coupons enable row level security;
 alter table public.payments enable row level security;
 alter table public.lesson_progress enable row level security;
 alter table public.quiz_attempts enable row level security;
+alter table public.showcase enable row level security;
 
 do $$
 declare r record;
@@ -376,6 +391,9 @@ create policy ac_progress_insert on public.lesson_progress for insert
 create policy ac_progress_delete on public.lesson_progress for delete using (user_id = auth.uid());
 
 create policy ac_attempts_read on public.quiz_attempts for select using (user_id = auth.uid() or public.is_admin());
+
+create policy ac_showcase_read on public.showcase for select using (is_published or public.is_admin());
+create policy ac_showcase_admin on public.showcase for all using (public.is_admin()) with check (public.is_admin());
 
 -- ---------- file storage ----------
 insert into storage.buckets (id, name, public) values ('slips', 'slips', false)

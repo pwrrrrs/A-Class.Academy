@@ -1,7 +1,7 @@
 // Two-language UI text. Course content itself is entered by the teacher and shown as-is.
 const dict = {
   th: {
-    'nav.courses': 'คอร์สเรียน', 'nav.online': 'เรียนออนไลน์', 'nav.teacher': 'ครูผู้สอน',
+    'nav.courses': 'คอร์สเรียน', 'nav.online': 'เรียนออนไลน์', 'nav.teacher': 'ครูผู้สอน', 'nav.showcase': 'บรรยากาศและรีวิว',
     'nav.login': 'เข้าสู่ระบบ', 'nav.my': 'ห้องเรียนของฉัน', 'nav.admin': 'หลังบ้าน', 'nav.logout': 'ออกจากระบบ',
     'price.ask': 'สอบถามราคา',
 
@@ -103,9 +103,20 @@ const dict = {
     'learn.confirmPartial': 'ยังตอบไม่ครบทุกข้อ ส่งเลยไหม?', 'learn.submitFail': 'ส่งคำตอบไม่สำเร็จ: {msg}',
     'learn.answer': 'เฉลย: {text}', 'learn.score': 'ได้ {score}/{total} คะแนน',
     'learn.great': ' เก่งมาก!', 'learn.tryAgain': ' ลองทบทวนแล้วทำใหม่อีกครั้งนะ',
+
+    'sc.pageTitle': 'ตัวอย่างการสอน บรรยากาศ และรีวิว', 'sc.eyebrow': 'ก่อนตัดสินใจสมัครเรียน',
+    'sc.title': 'ดูการสอนจริง บรรยากาศจริง จากห้องเรียนของเรา',
+    'sc.body': 'คลิปตัวอย่างการสอน รูปบรรยากาศในห้องเรียน และเสียงจากนักเรียนและผู้ปกครองที่เรียนกับครูจริง',
+    'sc.jump': 'ไปยังหัวข้อ',
+    'sc.videos': 'ตัวอย่างการสอน', 'sc.videosBody': 'คลิปสั้นจากห้องเรียนจริง ดูว่าครูอธิบายแบบไหน ก่อนให้น้องลงเรียน',
+    'sc.photos': 'บรรยากาศการเรียน', 'sc.photosBody': 'ห้องเรียนกลุ่มเล็ก ครูเห็นทุกคน ถามได้ทุกเรื่อง',
+    'sc.reviews': 'รีวิวจากนักเรียนและผู้ปกครอง', 'sc.reviewsBody': 'ความรู้สึกหลังเรียนกับเรา เล่าด้วยคำพูดของนักเรียนและผู้ปกครองเอง',
+    'sc.play': 'เล่นคลิป: {title}', 'sc.photoAlt': 'บรรยากาศในห้องเรียน', 'sc.reviewImg': 'ภาพรีวิว', 'sc.close': 'ปิด',
+    'sc.empty': 'ครูกำลังรวบรวมคลิป รูปบรรยากาศ และรีวิวอยู่ ระหว่างนี้ทักไลน์ขอดูตัวอย่างการสอนได้เลย',
+    'sc.ctaTitle': 'อยากให้น้องลองเรียนก่อน?', 'sc.ctaBody': 'ทักไลน์เล่าเกรดและเป้าหมายของน้อง ครูจะแนะนำคอร์สที่เหมาะให้',
   },
   en: {
-    'nav.courses': 'Courses', 'nav.online': 'Learn online', 'nav.teacher': 'Teacher',
+    'nav.courses': 'Courses', 'nav.online': 'Learn online', 'nav.teacher': 'Teacher', 'nav.showcase': 'Classes & reviews',
     'nav.login': 'Log in', 'nav.my': 'My classroom', 'nav.admin': 'Admin', 'nav.logout': 'Log out',
     'price.ask': 'Ask for price',
 
@@ -207,6 +218,17 @@ const dict = {
     'learn.confirmPartial': 'Some questions are unanswered. Submit anyway?', 'learn.submitFail': 'Could not submit: {msg}',
     'learn.answer': 'Answer: {text}', 'learn.score': 'You scored {score}/{total}.',
     'learn.great': ' Great job!', 'learn.tryAgain': ' Review the lesson and try again.',
+
+    'sc.pageTitle': 'Sample lessons, classroom and reviews', 'sc.eyebrow': 'Before you enrol',
+    'sc.title': 'See how we really teach, straight from our classroom',
+    'sc.body': 'Sample lesson clips, photos from class, and what students and parents who learned with us have to say.',
+    'sc.jump': 'Jump to section',
+    'sc.videos': 'Sample lessons', 'sc.videosBody': 'Short clips from real classes — see how the teacher explains before you sign up.',
+    'sc.photos': 'In the classroom', 'sc.photosBody': 'Small groups where the teacher sees everyone and every question gets answered.',
+    'sc.reviews': 'From students and parents', 'sc.reviewsBody': 'How it felt to learn with us, in their own words.',
+    'sc.play': 'Play clip: {title}', 'sc.photoAlt': 'Classroom photo', 'sc.reviewImg': 'Review screenshot', 'sc.close': 'Close',
+    'sc.empty': 'We are still gathering clips, photos and reviews. Meanwhile, message us on LINE to see a sample lesson.',
+    'sc.ctaTitle': 'Want to try a class first?', 'sc.ctaBody': 'Tell us about your grades and goals on LINE and we will recommend the right course.',
   },
 };
 
