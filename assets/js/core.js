@@ -4,7 +4,7 @@ import { t, getLang, setLang, applyI18n } from './i18n.js';
 
 export { t, getLang };
 
-const SUPABASE_JS = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm';
+const SUPABASE_JS = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.100.0/+esm';
 
 let clientPromise = null;
 export const isConfigured = () => Boolean(CONFIG.SUPABASE_URL && CONFIG.SUPABASE_ANON_KEY);

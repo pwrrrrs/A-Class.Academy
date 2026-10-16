@@ -4,8 +4,8 @@
 // ห้ามใส่ service_role / secret key ในไฟล์นี้เด็ดขาด
 
 export const CONFIG = {
-  SUPABASE_URL: '',        // เช่น 'https://abcdefgh.supabase.co'
-  SUPABASE_ANON_KEY: '',   // เช่น 'eyJhbGciOi...' หรือ 'sb_publishable_...'
+  SUPABASE_URL: 'https://itynuuiypiegtcudunre.supabase.co',
+  SUPABASE_ANON_KEY: 'sb_publishable_1wrHAElSry6qtzybkHBVVA_vlZCYoIZ',
 
   // โทนสี: 'indigo' (ครามทอง) | 'emerald' (เขียวมรกต) | 'plum' (ม่วงพลัม)
   TONE: 'indigo',
