@@ -3,7 +3,7 @@ import { initLayout, sb, esc, baht, fmtDate, $, $$, requireLogin, currentProfile
 const app = $('#app');
 let c;
 const TABS = [
-  ['payments', 'ตรวจสลิป'], ['courses', 'คอร์สและบทเรียน'], ['students', 'นักเรียน'], ['coupons', 'คูปอง'], ['settings', 'ตั้งค่าเว็บ'],
+  ['payments', 'ตรวจสลิป'], ['courses', 'คอร์สและบทเรียน'], ['students', 'นักเรียน'], ['coupons', 'คูปอง'], ['showcase', 'รีวิว/บรรยากาศ'], ['settings', 'ตั้งค่าเว็บ'],
 ];
 const STATUS = { pending: 'รอตรวจ', approved: 'อนุมัติแล้ว', rejected: 'ไม่ผ่าน' };
 
@@ -372,6 +372,91 @@ async function coupons(root) {
   }));
 }
 
+// ---------- showcase (sample clips, classroom photos, reviews) ----------
+const KINDS = { video: 'คลิปตัวอย่างการสอน', photo: 'รูปบรรยากาศ', review: 'รีวิว' };
+
+async function showcase(root) {
+  root.innerHTML = '<div class="spinner"></div>';
+  const { data: list, error } = await c.from('showcase').select('*').order('kind').order('sort_order').order('created_at', { ascending: false });
+  if (error) { root.innerHTML = `<div class="notice bad">${esc(error.message)} — ถ้าเพิ่งอัปเดตระบบ ให้รัน supabase/schema.sql อีกครั้ง</div>`; return; }
+  const preview = (x) => {
+    if (x.kind === 'video') { const id = youtubeId(x.media_url); return id ? `<img src="https://i.ytimg.com/vi/${id}/default.jpg" alt="" style="width:72px;border-radius:8px">` : '—'; }
+    return x.media_url ? `<img class="slip-thumb" src="${esc(x.media_url)}" alt="" style="width:72px;height:54px">` : '—';
+  };
+  root.innerHTML = `
+    <div class="row between" style="margin-bottom:16px">
+      <p class="muted small">สิ่งที่เพิ่มตรงนี้จะแสดงที่หน้า <a class="link" href="/showcase" target="_blank">บรรยากาศและรีวิว</a></p>
+      <div class="row">${Object.entries(KINDS).map(([k, label]) => `<button class="btn btn-ghost btn-sm" data-new="${k}">+ ${label}</button>`).join('')}</div>
+    </div>
+    ${list?.length ? `<div class="table-wrap"><table class="table"><thead><tr><th>ประเภท</th><th></th><th>รายละเอียด</th><th>ลำดับ</th><th>แสดงบนเว็บ</th></tr></thead><tbody>
+      ${list.map((x) => `<tr>
+        <td class="small">${KINDS[x.kind]}</td>
+        <td>${preview(x)}</td>
+        <td><button class="link" data-sc="${x.id}" style="text-align:left">${esc(x.title || x.author || (x.body || '').slice(0, 60) || '(ไม่มีชื่อ)')}</button>${x.kind === 'review' && x.author_detail ? `<div class="tiny muted">${esc(x.author_detail)}</div>` : ''}</td>
+        <td>${x.sort_order}</td>
+        <td>${x.is_published ? '<span class="badge active">แสดง</span>' : '<span class="badge pending">ซ่อน</span>'}</td>
+      </tr>`).join('')}</tbody></table></div>` : '<div class="empty">ยังไม่มีรายการ เริ่มจากเพิ่มคลิปตัวอย่างการสอน รูปบรรยากาศ หรือรีวิวจากนักเรียน</div>'}
+    <p class="small muted" style="margin-top:12px">รีวิว: ใช้ข้อความจริงจากนักเรียน/ผู้ปกครอง และขออนุญาตก่อนลงชื่อหรือรูปแชต · รูปที่มีหน้านักเรียน ควรได้รับอนุญาตจากผู้ปกครอง</p>`;
+  $$('[data-new]', root).forEach((b) => b.addEventListener('click', () => showcaseForm(root, { kind: b.dataset.new })));
+  $$('[data-sc]', root).forEach((b) => b.addEventListener('click', () => showcaseForm(root, list.find((x) => x.id === b.dataset.sc))));
+}
+
+function showcaseForm(root, x) {
+  x = { is_published: true, sort_order: 100, ...x };
+  const k = x.kind;
+  const titleLabel = k === 'video' ? 'ชื่อคลิป' : k === 'photo' ? 'คำบรรยายใต้รูป (ไม่บังคับ)' : '';
+  dialog(`
+    <h2 style="font-size:24px">${x.id ? 'แก้ไข' : 'เพิ่ม'}${KINDS[k]}</h2>
+    ${titleLabel ? `<div class="field"><label for="xTitle">${titleLabel}</label><input class="input" id="xTitle" value="${esc(x.title)}"></div>` : ''}
+    ${k === 'video' ? `
+      <div class="field"><label for="xUrl">ลิงก์ YouTube</label><input class="input" id="xUrl" value="${esc(x.media_url)}" placeholder="https://youtu.be/..."></div>
+      <div class="field"><label for="xBody">คำอธิบายสั้น (ไม่บังคับ)</label><input class="input" id="xBody" value="${esc(x.body)}" placeholder="เช่น เคมี ม.4 เรื่องสมดุลเคมี"></div>` : ''}
+    ${k === 'review' ? `
+      <div class="field"><label for="xBody">ข้อความรีวิว</label><textarea class="input" id="xBody" rows="5">${esc(x.body)}</textarea></div>
+      <div class="form-grid">
+        <div class="field"><label for="xAuthor">ชื่อผู้รีวิว</label><input class="input" id="xAuthor" value="${esc(x.author)}" placeholder="เช่น น้องมายด์"></div>
+        <div class="field"><label for="xDetail">รายละเอียด</label><input class="input" id="xDetail" value="${esc(x.author_detail)}" placeholder="เช่น ผู้ปกครองน้อง ม.4 · คอร์สเคมี"></div>
+      </div>` : ''}
+    ${k !== 'video' ? `<div class="field"><label for="xFile">${k === 'photo' ? 'รูป' : 'รูปแคปแชตรีวิว (ไม่บังคับ)'}</label><input class="input" id="xFile" type="file" accept="image/*">${x.media_url ? `<img src="${esc(x.media_url)}" alt="" style="max-width:200px;border-radius:12px">` : ''}</div>` : ''}
+    <div class="form-grid"><div class="field"><label for="xSort">ลำดับการแสดง (น้อยขึ้นก่อน)</label><input class="input" id="xSort" type="number" value="${x.sort_order}"></div></div>
+    <label class="check-row"><input type="checkbox" id="xPub" ${x.is_published ? 'checked' : ''}> แสดงบนเว็บไซต์</label>
+    <div id="xMsg" class="hidden" role="status"></div>
+    <div class="row between">
+      <div class="row"><button class="btn btn-brand" id="xSave">บันทึก</button><button class="btn btn-ghost" id="xCancel">ยกเลิก</button></div>
+      ${x.id ? '<button class="btn btn-danger btn-sm" id="xDel">ลบ</button>' : ''}
+    </div>`, (d) => {
+    $('#xCancel', d).addEventListener('click', () => d.close());
+    $('#xSave', d).addEventListener('click', async (e) => {
+      const msg = $('#xMsg', d);
+      const row = {
+        kind: k, title: val('xTitle') || null, body: val('xBody') || null,
+        author: val('xAuthor') || null, author_detail: val('xDetail') || null,
+        sort_order: Number(val('xSort') || 100), is_published: $('#xPub', d).checked,
+      };
+      const file = $('#xFile', d)?.files[0];
+      if (k === 'video') {
+        if (!youtubeId(val('xUrl'))) return notice(msg, 'bad', 'กรุณาใส่ลิงก์ YouTube ให้ถูกต้อง');
+        row.media_url = val('xUrl');
+      }
+      if (k === 'photo' && !file && !x.media_url) return notice(msg, 'bad', 'กรุณาเลือกรูป');
+      if (k === 'review' && !row.body && !file && !x.media_url) return notice(msg, 'bad', 'กรุณาใส่ข้อความรีวิว หรือแนบรูปแคปแชต');
+      e.target.disabled = true;
+      try {
+        if (file) row.media_url = await uploadMedia(file, 'showcase');
+        const res = x.id ? await c.from('showcase').update(row).eq('id', x.id) : await c.from('showcase').insert(row);
+        if (res.error) throw res.error;
+        d.close(); showcase(root);
+      } catch (err) { notice(msg, 'bad', err.message); e.target.disabled = false; }
+    });
+    $('#xDel', d)?.addEventListener('click', async () => {
+      if (!confirm('ลบรายการนี้?')) return;
+      const { error } = await c.from('showcase').delete().eq('id', x.id);
+      if (error) return notice($('#xMsg', d), 'bad', error.message);
+      d.close(); showcase(root);
+    });
+  });
+}
+
 // ---------- settings ----------
 async function settingsTab(root) {
   const { data } = await c.from('site_settings').select('key,value');
@@ -407,7 +492,7 @@ async function settingsTab(root) {
   });
 }
 
-const RENDER = { payments, courses, students, coupons, settings: settingsTab };
+const RENDER = { payments, courses, students, coupons, showcase, settings: settingsTab };
 
 (async () => {
   await initLayout();

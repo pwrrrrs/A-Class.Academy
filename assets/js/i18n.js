@@ -1,7 +1,7 @@
 // Two-language UI text. Course content itself is entered by the teacher and shown as-is.
 const dict = {
   th: {
-    'nav.courses': 'คอร์สเรียน', 'nav.online': 'เรียนออนไลน์', 'nav.teacher': 'ครูผู้สอน',
+    'nav.courses': 'คอร์สเรียน', 'nav.online': 'เรียนออนไลน์', 'nav.teacher': 'ครูผู้สอน', 'nav.showcase': 'บรรยากาศและรีวิว',
     'nav.login': 'เข้าสู่ระบบ', 'nav.my': 'ห้องเรียนของฉัน', 'nav.admin': 'หลังบ้าน', 'nav.logout': 'ออกจากระบบ',
     'price.ask': 'สอบถามราคา',
 
@@ -51,9 +51,72 @@ const dict = {
     'auth.login': 'เข้าสู่ระบบ', 'auth.signup': 'สมัครสมาชิก', 'auth.email': 'อีเมล', 'auth.password': 'รหัสผ่าน (อย่างน้อย 8 ตัว)',
     'auth.name': 'ชื่อ-นามสกุล (ของนักเรียน)', 'auth.phone': 'เบอร์โทร', 'auth.grade': 'ระดับชั้น', 'auth.school': 'โรงเรียน',
     'auth.forgot': 'ลืมรหัสผ่าน?', 'auth.reset': 'ส่งลิงก์ตั้งรหัสผ่านใหม่',
+
+    'common.loading': 'กำลังโหลด', 'common.notFound': 'ไม่พบคอร์สนี้', 'common.backAll': 'กลับไปดูคอร์สทั้งหมด',
+    'common.toMy': 'ไปห้องเรียนของฉัน', 'common.enterClass': 'เข้าห้องเรียน',
+
+    'my.title': 'ห้องเรียนของฉัน', 'my.hello': 'สวัสดี {name}', 'my.browse': 'ดูคอร์สอื่น',
+    'my.courses': 'คอร์สของฉัน', 'my.progress': 'เรียนแล้ว {n}/{total} บท',
+    'my.due': 'ค้างชำระงวดที่ {no}: {amount}', 'my.payDue': 'ชำระงวดนี้ →',
+    'my.continue': 'เรียนต่อ', 'my.start': 'เริ่มเรียน',
+    'my.empty': 'ยังไม่มีคอร์ส', 'my.pick': 'เลือกคอร์สที่สนใจ →',
+    'my.payments': 'การชำระเงิน', 'my.quizzes': 'คะแนนแบบทดสอบล่าสุด',
+    'my.colDate': 'วันที่', 'my.colCourse': 'คอร์ส', 'my.colInst': 'งวด', 'my.colAmount': 'ยอด', 'my.colStatus': 'สถานะ',
+    'my.colLesson': 'บทเรียน', 'my.colScore': 'คะแนน',
+    'my.planFull': 'จ่ายเต็ม', 'my.planInst': 'งวดที่ {no}/3',
+    'my.st.pending': 'รอตรวจสลิป', 'my.st.approved': 'อนุมัติแล้ว', 'my.st.rejected': 'ไม่ผ่าน',
+    'my.profile': 'ข้อมูลของฉัน', 'my.fName': 'ชื่อ-นามสกุล (นักเรียน)', 'my.fGrade': 'ระดับชั้น', 'my.fSchool': 'โรงเรียน',
+    'my.fPhone': 'เบอร์โทร', 'my.fParent': 'ชื่อผู้ปกครอง', 'my.fParentPhone': 'เบอร์ผู้ปกครอง',
+    'my.save': 'บันทึก', 'my.email': 'อีเมล: {email}', 'my.saved': 'บันทึกเรียบร้อย', 'my.saveFail': 'บันทึกไม่สำเร็จ: {msg}',
+
+    'course.pageTitle': 'รายละเอียดคอร์ส', 'course.all': '← คอร์สทั้งหมด',
+    'course.pending': 'ได้รับสลิปแล้ว รอครูตรวจสอบ ปกติไม่เกิน 24 ชั่วโมง', 'course.pendingLink': 'ดูสถานะในห้องเรียนของฉัน →',
+    'course.enroll': 'สมัครเรียนคอร์สนี้', 'course.inst': 'แบ่งจ่ายได้ 3 งวด (40% / 30% / 30%) งวดแรก {amount}',
+    'course.askLine': 'ทักไลน์สอบถามราคาและรอบเรียน', 'course.free': 'ดูฟรี',
+    'course.schedule': 'รอบเรียน / ตารางเรียน', 'course.lessons': 'บทเรียนในคอร์ส ({n} บท)',
+    'course.question': 'มีคำถาม? ทักไลน์ครูได้เลย',
+
+    'co.pageTitle': 'ชำระเงิน', 'co.back': '← กลับไปหน้าคอร์ส',
+    'co.pendingTitle': 'รอตรวจสลิป', 'co.pendingBody': 'ครูได้รับสลิปของคอร์ส {course} แล้ว จะตรวจและเปิดคอร์สให้โดยเร็ว',
+    'co.enrolled': 'ลงทะเบียนคอร์สนี้แล้ว', 'co.noPrice': 'คอร์สนี้ยังไม่ได้ตั้งราคา กรุณาทักไลน์สอบถาม',
+    'co.instTitle': 'ชำระงวดที่ {no} จาก 3', 'co.instPaid': 'ราคาคอร์ส {total} · ชำระแล้ว {paid}',
+    'co.step1': '1. เลือกวิธีชำระ', 'co.full': 'จ่ายเต็มจำนวน', 'co.inst': 'แบ่งจ่าย 3 งวด', 'co.instSplit': '40% ตอนสมัคร · 30% · 30%',
+    'co.coupon': 'โค้ดส่วนลด (ถ้ามี)', 'co.apply': 'ใช้โค้ด',
+    'co.scan': '{n}. สแกนจ่ายผ่าน PromptPay', 'co.scanHint': 'สแกนด้วยแอปธนาคารใดก็ได้ ยอดเงินจะขึ้นให้อัตโนมัติ',
+    'co.attach': '{n}. แนบสลิป', 'co.slip': 'รูปสลิปโอนเงิน (ไม่เกิน {mb} MB)', 'co.preview': 'ตัวอย่างสลิป',
+    'co.note': 'หมายเหตุถึงครู (ถ้ามี)', 'co.notePh': 'เช่น ชื่อนักเรียน หรือรอบเรียนที่ต้องการ', 'co.send': 'ส่งสลิป',
+    'co.afterTitle': 'หลังส่งสลิป', 'co.afterBody': 'ครูจะตรวจสลิปและเปิดคอร์สให้ ปกติไม่เกิน 24 ชั่วโมง ติดตามสถานะได้ที่ "ห้องเรียนของฉัน"',
+    'co.base': 'ราคาคอร์ส', 'co.discount': 'ส่วนลด ({code})', 'co.afterDiscount': 'ราคาหลังส่วนลด', 'co.dueNow': 'ยอดที่ต้องโอนตอนนี้',
+    'co.noPromptpay': 'ครูยังไม่ได้ตั้งเลขพร้อมเพย์ กรุณาทักไลน์เพื่อขอเลขบัญชี', 'co.qrLabel': 'QR พร้อมเพย์ ยอด {amount}',
+    'co.couponOk': 'ใช้โค้ด {code} แล้ว ลด {amount}', 'co.couponBad': 'ใช้โค้ดนี้ไม่ได้',
+    'co.errPick': 'กรุณาเลือกรูปสลิป', 'co.errImage': 'กรุณาเลือกไฟล์รูปภาพ', 'co.errSize': 'ไฟล์ใหญ่เกิน {mb} MB',
+    'co.sending': 'กำลังส่งสลิป…', 'co.sendFail': 'ส่งไม่สำเร็จ: {msg}',
+    'co.sentTitle': 'ส่งสลิปเรียบร้อย', 'co.sentBody': 'ครูจะตรวจและเปิดคอร์สให้โดยเร็ว ปกติไม่เกิน 24 ชั่วโมง',
+
+    'learn.pageTitle': 'บทเรียน', 'learn.video': 'วิดีโอบทเรียน',
+    'learn.noLessons': 'คอร์สนี้ยังไม่มีบทเรียนออนไลน์ ครูกำลังเตรียมเนื้อหาอยู่', 'learn.backMy': '← กลับห้องเรียนของฉัน',
+    'learn.locked': 'บทเรียนนี้สำหรับนักเรียนที่ลงทะเบียนแล้ว', 'learn.courseDetails': 'ดูรายละเอียดคอร์ส',
+    'learn.quiz': 'แบบทดสอบท้ายบท ({n} ข้อ)', 'learn.submit': 'ส่งคำตอบ', 'learn.retry': 'ทำใหม่',
+    'learn.crumb': '← ห้องเรียนของฉัน', 'learn.notes': 'สรุปเนื้อหา', 'learn.sheet': 'เปิดชีท / เอกสารประกอบ',
+    'learn.enrolledOnly': 'สำหรับนักเรียนที่ลงทะเบียน', 'learn.done': '✓ เรียนบทนี้แล้ว', 'learn.markDone': 'ทำเครื่องหมายว่าเรียนแล้ว',
+    'learn.prev': '← บทก่อนหน้า', 'learn.next': 'บทถัดไป →', 'learn.lessons': 'บทเรียน',
+    'learn.confirmPartial': 'ยังตอบไม่ครบทุกข้อ ส่งเลยไหม?', 'learn.submitFail': 'ส่งคำตอบไม่สำเร็จ: {msg}',
+    'learn.answer': 'เฉลย: {text}', 'learn.score': 'ได้ {score}/{total} คะแนน',
+    'learn.great': ' เก่งมาก!', 'learn.tryAgain': ' ลองทบทวนแล้วทำใหม่อีกครั้งนะ',
+
+    'sc.pageTitle': 'ตัวอย่างการสอน บรรยากาศ และรีวิว', 'sc.eyebrow': 'ก่อนตัดสินใจสมัครเรียน',
+    'sc.title': 'ดูการสอนจริง บรรยากาศจริง จากห้องเรียนของเรา',
+    'sc.body': 'คลิปตัวอย่างการสอน รูปบรรยากาศในห้องเรียน และเสียงจากนักเรียนและผู้ปกครองที่เรียนกับครูจริง',
+    'sc.jump': 'ไปยังหัวข้อ',
+    'sc.videos': 'ตัวอย่างการสอน', 'sc.videosBody': 'คลิปสั้นจากห้องเรียนจริง ดูว่าครูอธิบายแบบไหน ก่อนให้น้องลงเรียน',
+    'sc.photos': 'บรรยากาศการเรียน', 'sc.photosBody': 'ห้องเรียนกลุ่มเล็ก ครูเห็นทุกคน ถามได้ทุกเรื่อง',
+    'sc.reviews': 'รีวิวจากนักเรียนและผู้ปกครอง', 'sc.reviewsBody': 'ความรู้สึกหลังเรียนกับเรา เล่าด้วยคำพูดของนักเรียนและผู้ปกครองเอง',
+    'sc.play': 'เล่นคลิป: {title}', 'sc.photoAlt': 'บรรยากาศในห้องเรียน', 'sc.reviewImg': 'ภาพรีวิว', 'sc.close': 'ปิด',
+    'sc.empty': 'ครูกำลังรวบรวมคลิป รูปบรรยากาศ และรีวิวอยู่ ระหว่างนี้ทักไลน์ขอดูตัวอย่างการสอนได้เลย',
+    'sc.ctaTitle': 'อยากให้น้องลองเรียนก่อน?', 'sc.ctaBody': 'ทักไลน์เล่าเกรดและเป้าหมายของน้อง ครูจะแนะนำคอร์สที่เหมาะให้',
   },
   en: {
-    'nav.courses': 'Courses', 'nav.online': 'Learn online', 'nav.teacher': 'Teacher',
+    'nav.courses': 'Courses', 'nav.online': 'Learn online', 'nav.teacher': 'Teacher', 'nav.showcase': 'Classes & reviews',
     'nav.login': 'Log in', 'nav.my': 'My classroom', 'nav.admin': 'Admin', 'nav.logout': 'Log out',
     'price.ask': 'Ask for price',
 
@@ -103,6 +166,69 @@ const dict = {
     'auth.login': 'Log in', 'auth.signup': 'Sign up', 'auth.email': 'Email', 'auth.password': 'Password (8+ characters)',
     'auth.name': "Student's full name", 'auth.phone': 'Phone', 'auth.grade': 'Grade', 'auth.school': 'School',
     'auth.forgot': 'Forgot password?', 'auth.reset': 'Send reset link',
+
+    'common.loading': 'Loading', 'common.notFound': 'Course not found', 'common.backAll': 'Back to all courses',
+    'common.toMy': 'Go to My classroom', 'common.enterClass': 'Enter classroom',
+
+    'my.title': 'My classroom', 'my.hello': 'Hello, {name}', 'my.browse': 'Browse courses',
+    'my.courses': 'My courses', 'my.progress': '{n}/{total} lessons done',
+    'my.due': 'Instalment {no} due: {amount}', 'my.payDue': 'Pay now →',
+    'my.continue': 'Continue', 'my.start': 'Start learning',
+    'my.empty': 'No courses yet.', 'my.pick': 'Find a course →',
+    'my.payments': 'Payments', 'my.quizzes': 'Recent quiz scores',
+    'my.colDate': 'Date', 'my.colCourse': 'Course', 'my.colInst': 'Instalment', 'my.colAmount': 'Amount', 'my.colStatus': 'Status',
+    'my.colLesson': 'Lesson', 'my.colScore': 'Score',
+    'my.planFull': 'Paid in full', 'my.planInst': '{no} of 3',
+    'my.st.pending': 'Awaiting review', 'my.st.approved': 'Approved', 'my.st.rejected': 'Rejected',
+    'my.profile': 'My details', 'my.fName': "Student's full name", 'my.fGrade': 'Grade', 'my.fSchool': 'School',
+    'my.fPhone': 'Phone', 'my.fParent': "Parent's name", 'my.fParentPhone': "Parent's phone",
+    'my.save': 'Save', 'my.email': 'Email: {email}', 'my.saved': 'Saved', 'my.saveFail': 'Could not save: {msg}',
+
+    'course.pageTitle': 'Course details', 'course.all': '← All courses',
+    'course.pending': 'Slip received — the teacher usually checks it within 24 hours.', 'course.pendingLink': 'See status in My classroom →',
+    'course.enroll': 'Enrol in this course', 'course.inst': 'Pay in 3 instalments (40% / 30% / 30%) — first payment {amount}',
+    'course.askLine': 'Ask about price and schedule on LINE', 'course.free': 'Free',
+    'course.schedule': 'Schedule', 'course.lessons': 'Lessons in this course ({n})',
+    'course.question': 'Questions? Message the teacher on LINE',
+
+    'co.pageTitle': 'Checkout', 'co.back': '← Back to course',
+    'co.pendingTitle': 'Slip under review', 'co.pendingBody': 'The teacher has received your slip for {course} and will open the course soon.',
+    'co.enrolled': 'You are already enrolled', 'co.noPrice': 'This course has no price yet — please ask us on LINE.',
+    'co.instTitle': 'Pay instalment {no} of 3', 'co.instPaid': 'Course price {total} · Paid {paid}',
+    'co.step1': '1. Choose how to pay', 'co.full': 'Pay in full', 'co.inst': 'Pay in 3 instalments', 'co.instSplit': '40% now · 30% · 30%',
+    'co.coupon': 'Discount code (optional)', 'co.apply': 'Apply',
+    'co.scan': '{n}. Scan to pay with PromptPay', 'co.scanHint': 'Scan with any banking app — the amount fills in automatically.',
+    'co.attach': '{n}. Upload your slip', 'co.slip': 'Transfer slip image (max {mb} MB)', 'co.preview': 'Slip preview',
+    'co.note': 'Note to the teacher (optional)', 'co.notePh': "e.g. student's name or preferred class time", 'co.send': 'Send slip',
+    'co.afterTitle': 'After you send the slip', 'co.afterBody': 'The teacher checks it and opens the course, usually within 24 hours. Track the status in "My classroom".',
+    'co.base': 'Course price', 'co.discount': 'Discount ({code})', 'co.afterDiscount': 'Price after discount', 'co.dueNow': 'Amount to transfer now',
+    'co.noPromptpay': 'PromptPay is not set up yet — please ask us on LINE for payment details.', 'co.qrLabel': 'PromptPay QR for {amount}',
+    'co.couponOk': 'Code {code} applied — {amount} off', 'co.couponBad': 'This code cannot be used',
+    'co.errPick': 'Please choose a slip image', 'co.errImage': 'Please choose an image file', 'co.errSize': 'File is larger than {mb} MB',
+    'co.sending': 'Sending slip…', 'co.sendFail': 'Could not send: {msg}',
+    'co.sentTitle': 'Slip sent', 'co.sentBody': 'The teacher will check it and open the course soon, usually within 24 hours.',
+
+    'learn.pageTitle': 'Lesson', 'learn.video': 'Lesson video',
+    'learn.noLessons': 'This course has no online lessons yet — the teacher is preparing them.', 'learn.backMy': '← Back to My classroom',
+    'learn.locked': 'This lesson is for enrolled students.', 'learn.courseDetails': 'View course details',
+    'learn.quiz': 'Chapter quiz ({n} questions)', 'learn.submit': 'Submit answers', 'learn.retry': 'Try again',
+    'learn.crumb': '← My classroom', 'learn.notes': 'Summary', 'learn.sheet': 'Open worksheet / materials',
+    'learn.enrolledOnly': 'For enrolled students', 'learn.done': '✓ Lesson completed', 'learn.markDone': 'Mark as completed',
+    'learn.prev': '← Previous', 'learn.next': 'Next →', 'learn.lessons': 'Lessons',
+    'learn.confirmPartial': 'Some questions are unanswered. Submit anyway?', 'learn.submitFail': 'Could not submit: {msg}',
+    'learn.answer': 'Answer: {text}', 'learn.score': 'You scored {score}/{total}.',
+    'learn.great': ' Great job!', 'learn.tryAgain': ' Review the lesson and try again.',
+
+    'sc.pageTitle': 'Sample lessons, classroom and reviews', 'sc.eyebrow': 'Before you enrol',
+    'sc.title': 'See how we really teach, straight from our classroom',
+    'sc.body': 'Sample lesson clips, photos from class, and what students and parents who learned with us have to say.',
+    'sc.jump': 'Jump to section',
+    'sc.videos': 'Sample lessons', 'sc.videosBody': 'Short clips from real classes — see how the teacher explains before you sign up.',
+    'sc.photos': 'In the classroom', 'sc.photosBody': 'Small groups where the teacher sees everyone and every question gets answered.',
+    'sc.reviews': 'From students and parents', 'sc.reviewsBody': 'How it felt to learn with us, in their own words.',
+    'sc.play': 'Play clip: {title}', 'sc.photoAlt': 'Classroom photo', 'sc.reviewImg': 'Review screenshot', 'sc.close': 'Close',
+    'sc.empty': 'We are still gathering clips, photos and reviews. Meanwhile, message us on LINE to see a sample lesson.',
+    'sc.ctaTitle': 'Want to try a class first?', 'sc.ctaBody': 'Tell us about your grades and goals on LINE and we will recommend the right course.',
   },
 };
 
@@ -110,7 +236,12 @@ export function getLang() {
   try { return localStorage.getItem('lang') === 'en' ? 'en' : 'th'; } catch { return 'th'; }
 }
 export function setLang(l) { try { localStorage.setItem('lang', l); } catch { /* ignore */ } }
-export function t(key) { const l = getLang(); return dict[l][key] ?? dict.th[key] ?? key; }
+/** Looks up a UI string; {name} placeholders are filled from vars (values are inserted as-is, escape them first). */
+export function t(key, vars) {
+  const l = getLang();
+  const s = dict[l][key] ?? dict.th[key] ?? key;
+  return vars ? s.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? String(vars[k]) : m)) : s;
+}
 
 /** Fills elements marked data-i18n (text) or data-i18n-html (trusted markup from the dictionary). */
 export function applyI18n(root = document) {

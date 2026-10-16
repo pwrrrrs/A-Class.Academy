@@ -1,10 +1,10 @@
-import { initLayout, sb, esc, baht, fmtDate, $, requireLogin, currentProfile, notice } from '../core.js';
+import { initLayout, sb, esc, baht, fmtDate, $, requireLogin, currentProfile, notice, t } from '../core.js';
 
 const app = $('#app');
-const STATUS = { pending: 'รอตรวจสลิป', approved: 'อนุมัติแล้ว', rejected: 'ไม่ผ่าน' };
 
 (async () => {
   await initLayout();
+  document.title = `${t('my.title')} | A-Class Academy`;
   const user = await requireLogin();
   const c = await sb();
   const profile = await currentProfile();
@@ -39,10 +39,10 @@ const STATUS = { pending: 'รอตรวจสลิป', approved: 'อนุ
     <div class="card stack" style="gap:12px">
       <div class="row between"><span class="tag">${esc(e.courses.subject)}</span><span class="tiny muted">${esc(e.courses.level)}</span></div>
       <h3 style="font-size:20px">${esc(e.courses.title)}</h3>
-      <div class="row between small"><span class="muted">เรียนแล้ว ${n}/${ls.length} บท</span><b>${pct}%</b></div>
+      <div class="row between small"><span class="muted">${t('my.progress', { n, total: ls.length })}</span><b>${pct}%</b></div>
       <div class="bar"><span style="width:${pct}%"></span></div>
-      ${due ? `<div class="notice warn">ค้างชำระงวดที่ ${due.installment_no}: ${baht(due.amount)} <a class="link" href="/checkout?course=${encodeURIComponent(e.courses.slug)}">ชำระงวดนี้ →</a></div>` : ''}
-      <a class="btn btn-brand" href="/learn?course=${encodeURIComponent(e.courses.slug)}">${n ? 'เรียนต่อ' : 'เริ่มเรียน'}</a>
+      ${due ? `<div class="notice warn">${t('my.due', { no: due.installment_no, amount: baht(due.amount) })} <a class="link" href="/checkout?course=${encodeURIComponent(e.courses.slug)}">${t('my.payDue')}</a></div>` : ''}
+      <a class="btn btn-brand" href="/learn?course=${encodeURIComponent(e.courses.slug)}">${n ? t('my.continue') : t('my.start')}</a>
     </div>`;
   }).join('');
 
@@ -50,9 +50,9 @@ const STATUS = { pending: 'รอตรวจสลิป', approved: 'อนุ
     <tr>
       <td>${fmtDate(p.created_at)}</td>
       <td>${esc(p.courses?.title || '')}</td>
-      <td>${p.plan === 'full' ? 'จ่ายเต็ม' : `งวดที่ ${p.installment_no}/3`}</td>
+      <td>${p.plan === 'full' ? t('my.planFull') : t('my.planInst', { no: p.installment_no })}</td>
       <td>${baht(p.amount)}</td>
-      <td><span class="badge ${p.status}">${STATUS[p.status]}</span>${p.admin_note ? `<div class="tiny muted">${esc(p.admin_note)}</div>` : ''}</td>
+      <td><span class="badge ${p.status}">${t(`my.st.${p.status}`)}</span>${p.admin_note ? `<div class="tiny muted">${esc(p.admin_note)}</div>` : ''}</td>
     </tr>`).join('');
 
   const quizRows = (attempts || []).map((a) => `
@@ -61,41 +61,41 @@ const STATUS = { pending: 'รอตรวจสลิป', approved: 'อนุ
   const p = profile || {};
   app.innerHTML = `
     <div class="page-head">
-      <div><div class="eyebrow">ห้องเรียนของฉัน</div><h1>สวัสดี ${esc(p.full_name || user.email)}</h1></div>
-      <a class="btn btn-ghost" href="/#courses">ดูคอร์สอื่น</a>
+      <div><div class="eyebrow">${t('my.title')}</div><h1>${t('my.hello', { name: esc(p.full_name || user.email) })}</h1></div>
+      <a class="btn btn-ghost" href="/#courses">${t('my.browse')}</a>
     </div>
 
     <section class="stack" style="gap:16px;margin-bottom:48px">
-      <h2 style="font-size:24px">คอร์สของฉัน</h2>
-      ${courseCards ? `<div class="grid-courses">${courseCards}</div>` : `<div class="empty">ยังไม่มีคอร์ส <a class="link" href="/#courses">เลือกคอร์สที่สนใจ →</a></div>`}
+      <h2 style="font-size:24px">${t('my.courses')}</h2>
+      ${courseCards ? `<div class="grid-courses">${courseCards}</div>` : `<div class="empty">${t('my.empty')} <a class="link" href="/#courses">${t('my.pick')}</a></div>`}
     </section>
 
     ${pays?.length ? `
     <section class="stack" style="gap:16px;margin-bottom:48px">
-      <h2 style="font-size:24px">การชำระเงิน</h2>
-      <div class="table-wrap"><table class="table"><thead><tr><th>วันที่</th><th>คอร์ส</th><th>งวด</th><th>ยอด</th><th>สถานะ</th></tr></thead><tbody>${payRows}</tbody></table></div>
+      <h2 style="font-size:24px">${t('my.payments')}</h2>
+      <div class="table-wrap"><table class="table"><thead><tr><th>${t('my.colDate')}</th><th>${t('my.colCourse')}</th><th>${t('my.colInst')}</th><th>${t('my.colAmount')}</th><th>${t('my.colStatus')}</th></tr></thead><tbody>${payRows}</tbody></table></div>
     </section>` : ''}
 
     ${attempts?.length ? `
     <section class="stack" style="gap:16px;margin-bottom:48px">
-      <h2 style="font-size:24px">คะแนนแบบทดสอบล่าสุด</h2>
-      <div class="table-wrap"><table class="table"><thead><tr><th>วันที่</th><th>คอร์ส</th><th>บทเรียน</th><th>คะแนน</th></tr></thead><tbody>${quizRows}</tbody></table></div>
+      <h2 style="font-size:24px">${t('my.quizzes')}</h2>
+      <div class="table-wrap"><table class="table"><thead><tr><th>${t('my.colDate')}</th><th>${t('my.colCourse')}</th><th>${t('my.colLesson')}</th><th>${t('my.colScore')}</th></tr></thead><tbody>${quizRows}</tbody></table></div>
     </section>` : ''}
 
     <section class="stack" style="gap:16px">
-      <h2 style="font-size:24px">ข้อมูลของฉัน</h2>
+      <h2 style="font-size:24px">${t('my.profile')}</h2>
       <form id="pf" class="card stack">
         <div class="form-grid">
-          <div class="field"><label for="full_name">ชื่อ-นามสกุล (นักเรียน)</label><input class="input" id="full_name" value="${esc(p.full_name)}"></div>
-          <div class="field"><label for="grade">ระดับชั้น</label><input class="input" id="grade" value="${esc(p.grade)}"></div>
-          <div class="field"><label for="school">โรงเรียน</label><input class="input" id="school" value="${esc(p.school)}"></div>
-          <div class="field"><label for="phone">เบอร์โทร</label><input class="input" id="phone" type="tel" value="${esc(p.phone)}"></div>
+          <div class="field"><label for="full_name">${t('my.fName')}</label><input class="input" id="full_name" value="${esc(p.full_name)}"></div>
+          <div class="field"><label for="grade">${t('my.fGrade')}</label><input class="input" id="grade" value="${esc(p.grade)}"></div>
+          <div class="field"><label for="school">${t('my.fSchool')}</label><input class="input" id="school" value="${esc(p.school)}"></div>
+          <div class="field"><label for="phone">${t('my.fPhone')}</label><input class="input" id="phone" type="tel" value="${esc(p.phone)}"></div>
           <div class="field"><label for="line_id">LINE ID</label><input class="input" id="line_id" value="${esc(p.line_id)}"></div>
-          <div class="field"><label for="parent_name">ชื่อผู้ปกครอง</label><input class="input" id="parent_name" value="${esc(p.parent_name)}"></div>
-          <div class="field"><label for="parent_phone">เบอร์ผู้ปกครอง</label><input class="input" id="parent_phone" type="tel" value="${esc(p.parent_phone)}"></div>
+          <div class="field"><label for="parent_name">${t('my.fParent')}</label><input class="input" id="parent_name" value="${esc(p.parent_name)}"></div>
+          <div class="field"><label for="parent_phone">${t('my.fParentPhone')}</label><input class="input" id="parent_phone" type="tel" value="${esc(p.parent_phone)}"></div>
         </div>
         <div id="pmsg" class="hidden" role="status"></div>
-        <div class="row"><button class="btn btn-brand" type="submit">บันทึก</button><span class="small muted">อีเมล: ${esc(user.email)}</span></div>
+        <div class="row"><button class="btn btn-brand" type="submit">${t('my.save')}</button><span class="small muted">${t('my.email', { email: esc(user.email) })}</span></div>
       </form>
     </section>`;
 
@@ -104,6 +104,6 @@ const STATUS = { pending: 'รอตรวจสลิป', approved: 'อนุ
     const fields = ['full_name', 'grade', 'school', 'phone', 'line_id', 'parent_name', 'parent_phone'];
     const row = Object.fromEntries(fields.map((f) => [f, $(`#${f}`).value.trim() || null]));
     const { error } = await c.from('profiles').update(row).eq('id', user.id);
-    notice($('#pmsg'), error ? 'bad' : 'ok', error ? `บันทึกไม่สำเร็จ: ${error.message}` : 'บันทึกเรียบร้อย');
+    notice($('#pmsg'), error ? 'bad' : 'ok', error ? t('my.saveFail', { msg: error.message }) : t('my.saved'));
   });
 })();

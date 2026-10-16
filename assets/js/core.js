@@ -124,6 +124,7 @@ function headerHtml(profile) {
       <a href="/#courses">${t('nav.courses')}</a>
       <a href="/#online">${t('nav.online')}</a>
       <a href="/#teacher">${t('nav.teacher')}</a>
+      <a href="/showcase">${t('nav.showcase')}</a>
       ${authLinks}
       <button type="button" class="lang-btn" id="langBtn" aria-label="Switch language">${getLang() === 'th' ? 'EN' : 'ไทย'}</button>
     </nav>
