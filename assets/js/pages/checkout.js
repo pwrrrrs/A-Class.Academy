@@ -18,13 +18,13 @@ const MAX_MB = 5;
     c.from('payments').select('id').eq('course_id', course.id).eq('user_id', user.id).eq('status', 'pending'),
   ]);
 
-  const back = `<a class="link" href="/course.html?slug=${encodeURIComponent(course.slug)}">← กลับไปหน้าคอร์ส</a>`;
+  const back = `<a class="link" href="/course?slug=${encodeURIComponent(course.slug)}">← กลับไปหน้าคอร์ส</a>`;
   if (pending?.length) {
-    app.innerHTML = `<div class="auth-box card stack"><h1 style="font-size:26px">รอตรวจสลิป</h1><p class="muted">ครูได้รับสลิปของคอร์ส ${esc(course.title)} แล้ว จะตรวจและเปิดคอร์สให้โดยเร็ว</p><a class="btn btn-brand" href="/my.html">ไปห้องเรียนของฉัน</a></div>`;
+    app.innerHTML = `<div class="auth-box card stack"><h1 style="font-size:26px">รอตรวจสลิป</h1><p class="muted">ครูได้รับสลิปของคอร์ส ${esc(course.title)} แล้ว จะตรวจและเปิดคอร์สให้โดยเร็ว</p><a class="btn btn-brand" href="/my">ไปห้องเรียนของฉัน</a></div>`;
     return;
   }
   if (en?.status === 'active' && !due) {
-    app.innerHTML = `<div class="auth-box card stack"><h1 style="font-size:26px">ลงทะเบียนคอร์สนี้แล้ว</h1><a class="btn btn-brand" href="/learn.html?course=${encodeURIComponent(course.slug)}">เข้าห้องเรียน</a></div>`;
+    app.innerHTML = `<div class="auth-box card stack"><h1 style="font-size:26px">ลงทะเบียนคอร์สนี้แล้ว</h1><a class="btn btn-brand" href="/learn?course=${encodeURIComponent(course.slug)}">เข้าห้องเรียน</a></div>`;
     return;
   }
   if (!course.price && !due) { app.innerHTML = `<div class="empty">คอร์สนี้ยังไม่ได้ตั้งราคา กรุณาทักไลน์สอบถาม<br>${back}</div>`; return; }
@@ -156,7 +156,7 @@ const MAX_MB = 5;
         <div class="auth-box card stack" style="text-align:center;padding:40px">
           <h1 style="font-size:28px">ส่งสลิปเรียบร้อย</h1>
           <p class="muted">ครูจะตรวจและเปิดคอร์สให้โดยเร็ว ปกติไม่เกิน 24 ชั่วโมง</p>
-          <a class="btn btn-brand" href="/my.html">ไปห้องเรียนของฉัน</a>
+          <a class="btn btn-brand" href="/my">ไปห้องเรียนของฉัน</a>
         </div>`;
     } catch (err) {
       notice(msg, 'bad', `ส่งไม่สำเร็จ: ${err.message}`);

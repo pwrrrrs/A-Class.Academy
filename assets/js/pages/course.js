@@ -31,11 +31,11 @@ const lineHref = (s) => lineLink(s, '/#contact');
 
   let action;
   if (enrolled) {
-    action = `<a class="btn btn-brand" href="/learn.html?course=${encodeURIComponent(course.slug)}">เข้าห้องเรียน</a>`;
+    action = `<a class="btn btn-brand" href="/learn?course=${encodeURIComponent(course.slug)}">เข้าห้องเรียน</a>`;
   } else if (pending) {
-    action = `<div class="notice warn">ได้รับสลิปแล้ว รอครูตรวจสอบ ปกติไม่เกิน 24 ชั่วโมง</div><a class="link" href="/my.html">ดูสถานะในห้องเรียนของฉัน →</a>`;
+    action = `<div class="notice warn">ได้รับสลิปแล้ว รอครูตรวจสอบ ปกติไม่เกิน 24 ชั่วโมง</div><a class="link" href="/my">ดูสถานะในห้องเรียนของฉัน →</a>`;
   } else if (course.price) {
-    action = `<a class="btn btn-brand" href="/checkout.html?course=${encodeURIComponent(course.slug)}">สมัครเรียนคอร์สนี้</a>
+    action = `<a class="btn btn-brand" href="/checkout?course=${encodeURIComponent(course.slug)}">สมัครเรียนคอร์สนี้</a>
       ${course.allow_installments ? `<p class="small muted">แบ่งจ่ายได้ 3 งวด (40% / 30% / 30%) งวดแรก ${baht(Math.round(course.price * 0.4))}</p>` : ''}`;
   } else {
     action = `<a class="btn btn-accent" href="${esc(lineHref(settings))}" target="_blank" rel="noopener">ทักไลน์สอบถามราคาและรอบเรียน</a>`;
@@ -45,7 +45,7 @@ const lineHref = (s) => lineLink(s, '/#contact');
     const open = enrolled || l.is_preview;
     const label = `${i + 1}. ${esc(l.title)}`;
     return `<li>${open
-      ? `<a href="/learn.html?course=${encodeURIComponent(course.slug)}&lesson=${l.id}">${label}${l.is_preview && !enrolled ? ' <span class="tag">ดูฟรี</span>' : ''}</a>`
+      ? `<a href="/learn?course=${encodeURIComponent(course.slug)}&lesson=${l.id}">${label}${l.is_preview && !enrolled ? ' <span class="tag">ดูฟรี</span>' : ''}</a>`
       : `<span class="locked"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>${label}</span>`}</li>`;
   }).join('');
 

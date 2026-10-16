@@ -18,7 +18,7 @@ let level = 'all';
 
 function card(c) {
   return `
-  <a class="card course-card" href="/course.html?slug=${encodeURIComponent(c.slug)}">
+  <a class="card course-card" href="/course?slug=${encodeURIComponent(c.slug)}">
     <div class="row between"><span class="tag">${esc(c.subject)}</span><span class="tiny muted">${esc(c.level)}</span></div>
     <h3>${esc(c.title)}</h3>
     <p class="desc">${esc(c.short_desc)}</p>

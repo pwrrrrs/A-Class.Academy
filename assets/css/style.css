@@ -210,3 +210,5 @@ dialog .dlg { padding: 24px; display: flex; flex-direction: column; gap: 16px; m
   .stat-num { font-size: 24px; }
 }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+.site-footer .muted { color: var(--on-band); opacity: .85; }
+.btn, .course-card .foot > span, .badge, .tag { white-space: nowrap; }

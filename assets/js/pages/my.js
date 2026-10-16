@@ -41,8 +41,8 @@ const STATUS = { pending: 'รอตรวจสลิป', approved: 'อนุ
       <h3 style="font-size:20px">${esc(e.courses.title)}</h3>
       <div class="row between small"><span class="muted">เรียนแล้ว ${n}/${ls.length} บท</span><b>${pct}%</b></div>
       <div class="bar"><span style="width:${pct}%"></span></div>
-      ${due ? `<div class="notice warn">ค้างชำระงวดที่ ${due.installment_no}: ${baht(due.amount)} <a class="link" href="/checkout.html?course=${encodeURIComponent(e.courses.slug)}">ชำระงวดนี้ →</a></div>` : ''}
-      <a class="btn btn-brand" href="/learn.html?course=${encodeURIComponent(e.courses.slug)}">${n ? 'เรียนต่อ' : 'เริ่มเรียน'}</a>
+      ${due ? `<div class="notice warn">ค้างชำระงวดที่ ${due.installment_no}: ${baht(due.amount)} <a class="link" href="/checkout?course=${encodeURIComponent(e.courses.slug)}">ชำระงวดนี้ →</a></div>` : ''}
+      <a class="btn btn-brand" href="/learn?course=${encodeURIComponent(e.courses.slug)}">${n ? 'เรียนต่อ' : 'เริ่มเรียน'}</a>
     </div>`;
   }).join('');
 

@@ -3,7 +3,7 @@ import { initLayout, sb, t, param, $, notice, currentUser, isConfigured } from '
 const app = $('#app');
 const next = () => {
   const n = param('next');
-  return n && n.startsWith('/') && !n.startsWith('//') ? n : '/my.html';
+  return n && n.startsWith('/') && !n.startsWith('//') ? n : '/my';
 };
 const GRADES = ['ป.1', 'ป.2', 'ป.3', 'ป.4', 'ป.5', 'ป.6', 'ม.1', 'ม.2', 'ม.3', 'ม.4', 'ม.5', 'ม.6', 'มหาวิทยาลัย', 'อื่นๆ'];
 
@@ -90,7 +90,7 @@ async function submit(mode, btn) {
       const { data, error } = await c.auth.signUp({
         email, password: pw,
         options: {
-          emailRedirectTo: `${location.origin}/my.html`,
+          emailRedirectTo: `${location.origin}/my`,
           data: { full_name: $('#name').value.trim(), phone: $('#phone').value.trim(), grade: $('#grade').value, school: $('#school').value.trim() },
         },
       });
@@ -99,14 +99,14 @@ async function submit(mode, btn) {
       notice(msg, 'ok', `สมัครเรียบร้อย! ระบบส่งอีเมลยืนยันไปที่ ${email} แล้ว กดลิงก์ในอีเมลเพื่อเริ่มใช้งาน (ถ้าไม่เจอ ลองดูในโฟลเดอร์ Junk/Spam)`);
       $('#f').classList.add('hidden');
     } else if (mode === 'forgot') {
-      const { error } = await c.auth.resetPasswordForEmail(email, { redirectTo: `${location.origin}/login.html?mode=reset` });
+      const { error } = await c.auth.resetPasswordForEmail(email, { redirectTo: `${location.origin}/login?mode=reset` });
       if (error) throw error;
       notice(msg, 'ok', 'ส่งลิงก์ไปที่อีเมลแล้ว กรุณาเช็กกล่องจดหมาย');
     } else if (mode === 'reset') {
       const { error } = await c.auth.updateUser({ password: pw });
       if (error) throw error;
       notice(msg, 'ok', 'เปลี่ยนรหัสผ่านเรียบร้อย กำลังพาไปห้องเรียน…');
-      setTimeout(() => location.replace('/my.html'), 1200);
+      setTimeout(() => location.replace('/my'), 1200);
     }
   } catch (err) {
     notice(msg, 'bad', thaiError(err.message));

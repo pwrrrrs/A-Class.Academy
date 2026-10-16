@@ -43,7 +43,7 @@ export async function requireLogin() {
   const user = await currentUser();
   if (!user) {
     const back = encodeURIComponent(location.pathname + location.search);
-    location.replace(`/login.html?next=${back}`);
+    location.replace(`/login?next=${back}`);
     return new Promise(() => {}); // stop the page
   }
   return user;
@@ -111,10 +111,10 @@ export { icons };
 
 function headerHtml(profile) {
   const authLinks = profile
-    ? `<a href="/my.html" data-i18n="nav.my">${t('nav.my')}</a>
-       ${profile.role === 'admin' ? `<a href="/admin.html" data-i18n="nav.admin">${t('nav.admin')}</a>` : ''}
+    ? `<a href="/my" data-i18n="nav.my">${t('nav.my')}</a>
+       ${profile.role === 'admin' ? `<a href="/admin" data-i18n="nav.admin">${t('nav.admin')}</a>` : ''}
        <button type="button" class="btn btn-ghost btn-sm" id="logoutBtn">${t('nav.logout')}</button>`
-    : `<a href="/login.html" class="btn btn-ghost btn-sm">${t('nav.login')}</a>`;
+    : `<a href="/login" class="btn btn-ghost btn-sm">${t('nav.login')}</a>`;
   return `
   <div class="wrap">
     <a href="/" class="logo" aria-label="A-Class Academy หน้าแรก">

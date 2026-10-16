@@ -42,12 +42,12 @@ const linkify = (text) => esc(text).replace(/(https?:\/\/[^\s<]+)/g, '<a class="
   const canOpen = (l) => enrolled || l.is_preview;
 
   if (!lessons?.length) {
-    app.innerHTML = `<div class="empty">คอร์สนี้ยังไม่มีบทเรียนออนไลน์ ครูกำลังเตรียมเนื้อหาอยู่<br><a class="link" href="/my.html">← กลับห้องเรียนของฉัน</a></div>`;
+    app.innerHTML = `<div class="empty">คอร์สนี้ยังไม่มีบทเรียนออนไลน์ ครูกำลังเตรียมเนื้อหาอยู่<br><a class="link" href="/my">← กลับห้องเรียนของฉัน</a></div>`;
     return;
   }
   let lesson = lessons.find((l) => l.id === param('lesson')) || lessons.find((l) => canOpen(l) && !done.has(l.id)) || lessons.find(canOpen);
   if (!lesson || !canOpen(lesson)) {
-    app.innerHTML = `<div class="empty">บทเรียนนี้สำหรับนักเรียนที่ลงทะเบียนแล้ว<br><a class="btn btn-brand" style="margin-top:16px" href="/course.html?slug=${encodeURIComponent(course.slug)}">ดูรายละเอียดคอร์ส</a></div>`;
+    app.innerHTML = `<div class="empty">บทเรียนนี้สำหรับนักเรียนที่ลงทะเบียนแล้ว<br><a class="btn btn-brand" style="margin-top:16px" href="/course?slug=${encodeURIComponent(course.slug)}">ดูรายละเอียดคอร์ส</a></div>`;
     return;
   }
 
@@ -59,7 +59,7 @@ const linkify = (text) => esc(text).replace(/(https?:\/\/[^\s<]+)/g, '<a class="
   const idx = lessons.findIndex((l) => l.id === lesson.id);
   const prev = lessons.slice(0, idx).reverse().find(canOpen);
   const next = lessons.slice(idx + 1).find(canOpen);
-  const href = (l) => `/learn.html?course=${encodeURIComponent(course.slug)}&lesson=${l.id}`;
+  const href = (l) => `/learn?course=${encodeURIComponent(course.slug)}&lesson=${l.id}`;
 
   const side = lessons.map((l, i) => `<li>${canOpen(l)
     ? `<a href="${href(l)}" ${l.id === lesson.id ? 'aria-current="page"' : ''}><span class="dot ${done.has(l.id) ? 'done' : ''}">${done.has(l.id) ? '✓' : ''}</span>${i + 1}. ${esc(l.title)}</a>`
@@ -82,7 +82,7 @@ const linkify = (text) => esc(text).replace(/(https?:\/\/[^\s<]+)/g, '<a class="
     </section>` : '';
 
   app.innerHTML = `
-    <nav class="small" style="margin-bottom:16px"><a class="link" href="/my.html">← ห้องเรียนของฉัน</a> <span class="muted">/ ${esc(course.title)}</span></nav>
+    <nav class="small" style="margin-bottom:16px"><a class="link" href="/my">← ห้องเรียนของฉัน</a> <span class="muted">/ ${esc(course.title)}</span></nav>
     <div class="learn">
       <div class="learn-main">
         <h1 style="font-size:clamp(24px,3vw,32px)">${esc(lesson.title)}</h1>
