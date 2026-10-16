@@ -86,6 +86,14 @@ export function notice(el, kind, msg) {
   el.textContent = msg;
   el.classList.remove('hidden');
 }
+export function lineLink(s, fallback = '') {
+  if (s.line_url) return s.line_url;
+  if (!s.line_id) return fallback;
+  const id = s.line_id.trim();
+  return id.startsWith('@')
+    ? `https://line.me/R/ti/p/@${encodeURIComponent(id.slice(1))}`
+    : `https://line.me/R/ti/p/~${encodeURIComponent(id)}`;
+}
 export const priceLabel = (c) => (c.price ? baht(c.price) : t('price.ask'));
 
 export function youtubeId(input) {
@@ -123,10 +131,10 @@ function headerHtml(profile) {
 }
 
 function footerHtml(s) {
-  const lineHref = s.line_url || (s.line_id ? `https://line.me/R/ti/p/${encodeURIComponent(s.line_id.startsWith('@') ? s.line_id : '~' + s.line_id)}` : '');
+  const lineHref = lineLink(s);
   const fb = s.facebook_url ? `<a href="${esc(s.facebook_url)}" target="_blank" rel="noopener">${t('footer.fbOpen')}</a>` : '—';
   return `
-  <div class="wrap">
+  <div class="wrap" id="contact">
     <div class="row between" style="gap:32px;align-items:flex-end">
       <div class="stack" style="gap:12px;max-width:520px">
         <h2 style="font-size:clamp(26px,3vw,36px)">${t('footer.title')}</h2>
