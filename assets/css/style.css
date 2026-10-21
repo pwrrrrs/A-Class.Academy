@@ -59,7 +59,7 @@ img { max-width: 100%; display: block; }
 .site-header { background: var(--ground); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 20; }
 .site-header .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding-top: 14px; padding-bottom: 14px; }
 .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-.logo-mark { width: 44px; height: 44px; border-radius: 12px; background: var(--brand); color: var(--on-brand); display: grid; place-items: center; font-family: Anuphan, sans-serif; font-weight: 700; font-size: 20px; }
+.logo-mark { width: 44px; height: 44px; display: block; object-fit: contain; }
 .logo-text { font-family: Anuphan, sans-serif; font-weight: 700; font-size: 21px; color: var(--brand); }
 .nav { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 22px; font-size: 16px; }
 .nav a { text-decoration: none; }
