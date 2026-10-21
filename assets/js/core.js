@@ -118,7 +118,7 @@ function headerHtml(profile) {
   return `
   <div class="wrap">
     <a href="/" class="logo" aria-label="A-Class Academy หน้าแรก">
-      <span class="logo-mark" aria-hidden="true">A</span><span class="logo-text">A-Class Academy</span>
+      <img class="logo-mark" src="/assets/img/logo-mark.png" alt="" width="44" height="44"><span class="logo-text">A-Class Academy</span>
     </a>
     <nav class="nav" aria-label="เมนูหลัก">
       <a href="/#courses">${t('nav.courses')}</a>
